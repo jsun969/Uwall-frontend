@@ -13,12 +13,16 @@ const theme = createTheme({
 function App() {
   return (
     <ThemeProvider theme={theme}>
-      <AppBar>
-        <Toolbar>
-          <Typography variant="h6">万能墙</Typography>
-        </Toolbar>
-      </AppBar>
-      <PostButton />
+      <header>
+        <AppBar>
+          <Toolbar>
+            <Typography variant="h6">万能墙</Typography>
+          </Toolbar>
+        </AppBar>
+      </header>
+      <main>
+        <PostButton />
+      </main>
     </ThemeProvider>
   );
 }

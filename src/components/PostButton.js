@@ -2,6 +2,7 @@ import { SpeedDial, SpeedDialIcon, SpeedDialAction } from '@material-ui/lab';
 import { Edit, Favorite, RecordVoiceOver, Help, Notifications, People } from '@material-ui/icons';
 import { makeStyles } from '@material-ui/core/styles';
 import { useState } from 'react';
+import PostDialog from './PostDialog';
 
 const useStyles = makeStyles((theme) => ({
   speedDial: {
@@ -12,18 +13,22 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const actions = [
-  { icon: <Favorite />, name: '表白' },
-  { icon: <RecordVoiceOver />, name: '吐槽' },
-  { icon: <Help />, name: '求助' },
-  { icon: <Notifications />, name: '通知' },
-  { icon: <People />, name: '扩列' },
+  { name: 'love', icon: <Favorite />, label: '表白' },
+  { name: 'complaint', icon: <RecordVoiceOver />, label: '吐槽' },
+  { name: 'help', icon: <Help />, label: '求助' },
+  { name: 'notice', icon: <Notifications />, label: '通知' },
+  { name: 'expand', icon: <People />, label: '扩列' },
 ];
 
 export default function PostButton() {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
-  const handleAction = () => {
+  const [openDialog, setOpenDialog] = useState(false);
+  const [type, setType] = useState(null);
+  const handleAction = (name) => {
     setOpen(false);
+    setType(name);
+    setOpenDialog(true);
   };
   return (
     <div>
@@ -40,9 +45,24 @@ export default function PostButton() {
         open={open}
       >
         {actions.map((action) => (
-          <SpeedDialAction key={action.name} icon={action.icon} tooltipTitle={action.name} tooltipOpen onClick={handleAction} />
+          <SpeedDialAction
+            key={action.name}
+            icon={action.icon}
+            tooltipTitle={action.label}
+            tooltipOpen
+            onClick={() => {
+              handleAction(action.name);
+            }}
+          />
         ))}
       </SpeedDial>
+      <PostDialog
+        open={openDialog}
+        type={type}
+        onClose={() => {
+          setOpenDialog(false);
+        }}
+      />
     </div>
   );
 }
