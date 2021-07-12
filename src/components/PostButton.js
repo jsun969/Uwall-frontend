@@ -28,7 +28,7 @@ export default function PostButton() {
   return (
     <div>
       <SpeedDial
-        ariaLabel="Post Button"
+        ariaLabel="PostButton"
         className={classes.speedDial}
         icon={<SpeedDialIcon openIcon={<Edit />} />}
         onClose={() => {
