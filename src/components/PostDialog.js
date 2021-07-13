@@ -2,6 +2,7 @@ import { forwardRef } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Dialog, AppBar, Toolbar, IconButton, Typography, Slide } from '@material-ui/core';
 import { Close } from '@material-ui/icons';
+import Love from './forms/Love';
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -17,25 +18,44 @@ const Transition = forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
+const content = [
+  { type: 'love', title: '表白', data: <Love /> },
+  { type: 'complaint', title: '吐槽', data: '' },
+  { type: 'help', title: '求助', data: '' },
+  { type: 'notice', title: '通知', data: '' },
+  { type: 'expand', title: '扩列', data: '' },
+];
+
 export default function PostDialog(props) {
   const classes = useStyles();
-  const handleClose = () => {
-    props.onClose();
-  };
   return (
     <div>
-      <Dialog fullScreen open={props.open} onClose={handleClose} TransitionComponent={Transition}>
+      <Dialog
+        fullScreen
+        open={props.open}
+        onClose={() => {
+          props.onClose();
+        }}
+        TransitionComponent={Transition}
+      >
         <AppBar className={classes.appBar}>
           <Toolbar>
-            <IconButton edge="start" color="inherit" onClick={handleClose} aria-label="close">
+            <IconButton
+              edge="start"
+              color="inherit"
+              onClick={() => {
+                props.onClose();
+              }}
+              aria-label="close"
+            >
               <Close />
             </IconButton>
             <Typography variant="h6" className={classes.title}>
-              {props.type}
+              {content.find(({ type }) => type === props.type).title}
             </Typography>
           </Toolbar>
         </AppBar>
-        <Typography variant="h6">Nothing Here..</Typography>
+        <Typography variant="h6">{content.find(({ type }) => type === props.type).data}</Typography>
       </Dialog>
     </div>
   );

@@ -24,7 +24,7 @@ export default function PostButton() {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
   const [openDialog, setOpenDialog] = useState(false);
-  const [type, setType] = useState(null);
+  const [type, setType] = useState('love');
   const handleAction = (name) => {
     setOpen(false);
     setType(name);
