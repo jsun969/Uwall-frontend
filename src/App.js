@@ -19,7 +19,7 @@ function App() {
           <Toolbar>
             <QuestionAnswer />
             <Box ml={1}>
-              <Typography variant="h6">万能墙</Typography>
+              <Typography variant="h6">{process.env.REACT_APP_SCHOOL}万能墙</Typography>
             </Box>
           </Toolbar>
         </AppBar>
