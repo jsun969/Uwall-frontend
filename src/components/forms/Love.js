@@ -36,6 +36,7 @@ export default function Love() {
                     onChange={(event) => {
                       setFromName(event.target.value);
                     }}
+                    inputProps={{ maxLength: 15 }}
                   />
                 </Grid>
                 <Grid item xs={12}>
@@ -65,6 +66,7 @@ export default function Love() {
               onChange={(event) => {
                 setToName(event.target.value);
               }}
+              inputProps={{ maxLength: 15 }}
             />
           </Grid>
           <Grid item xs={12}>
@@ -94,6 +96,7 @@ export default function Love() {
               onChange={(event) => {
                 setMessage(event.target.value);
               }}
+              inputProps={{ maxLength: 250 }}
             />
           </Grid>
           <Grid item xs={6}>
@@ -104,14 +107,13 @@ export default function Love() {
                   onChange={(event) => {
                     setAnonymous(event.target.checked);
                   }}
-                  name="checkedA"
                 />
               }
               label="匿名"
             />
           </Grid>
           <Grid item xs={6}>
-            <Button variant="contained" color="primary">
+            <Button variant="contained" color="primary" disabled={!((anonymous || !!fromName) && !!toName && !!message)}>
               发送
             </Button>
           </Grid>
