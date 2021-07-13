@@ -1,4 +1,5 @@
-import { AppBar, Toolbar, Typography } from '@material-ui/core';
+import { AppBar, Toolbar, Typography, Box } from '@material-ui/core';
+import { QuestionAnswer } from '@material-ui/icons';
 import { ThemeProvider, createTheme } from '@material-ui/core/styles';
 import { pink, purple } from '@material-ui/core/colors';
 import PostButton from './components/PostButton';
@@ -16,7 +17,10 @@ function App() {
       <header>
         <AppBar>
           <Toolbar>
-            <Typography variant="h6">万能墙</Typography>
+            <QuestionAnswer />
+            <Box ml={1}>
+              <Typography variant="h6">万能墙</Typography>
+            </Box>
           </Toolbar>
         </AppBar>
       </header>
