@@ -1,3 +1,5 @@
+import { sendLove } from '../../api';
+import { useState } from 'react';
 import {
   TextField,
   Box,
@@ -12,7 +14,6 @@ import {
   Button,
   Collapse,
 } from '@material-ui/core';
-import { useState } from 'react';
 
 export default function Love() {
   const [fromSex, setFromSex] = useState(0);
@@ -113,7 +114,25 @@ export default function Love() {
             />
           </Grid>
           <Grid item xs={6}>
-            <Button variant="contained" color="primary" disabled={!((anonymous || !!fromName) && !!toName && !!message)}>
+            <Button
+              variant="contained"
+              color="primary"
+              disabled={!((anonymous || !!fromName) && !!toName && !!message)}
+              onClick={async () => {
+                const { status } = await sendLove({
+                  from: {
+                    name: anonymous ? '' : fromName,
+                    sex: anonymous ? 0 : fromSex,
+                  },
+                  to: {
+                    name: toName,
+                    sex: toSex,
+                  },
+                  message,
+                  anonymous,
+                });
+              }}
+            >
               发送
             </Button>
           </Grid>
