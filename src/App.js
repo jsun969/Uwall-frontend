@@ -3,6 +3,7 @@ import { QuestionAnswer } from '@material-ui/icons';
 import { ThemeProvider, createTheme } from '@material-ui/core/styles';
 import { pink, purple } from '@material-ui/core/colors';
 import PostButton from './components/PostButton';
+import { SnackbarProvider } from 'notistack';
 
 const theme = createTheme({
   palette: {
@@ -14,19 +15,21 @@ const theme = createTheme({
 function App() {
   return (
     <ThemeProvider theme={theme}>
-      <header>
-        <AppBar>
-          <Toolbar>
-            <QuestionAnswer />
-            <Box ml={1}>
-              <Typography variant="h6">{process.env.REACT_APP_SCHOOL}万能墙</Typography>
-            </Box>
-          </Toolbar>
-        </AppBar>
-      </header>
-      <main>
-        <PostButton />
-      </main>
+      <SnackbarProvider>
+        <header>
+          <AppBar>
+            <Toolbar>
+              <QuestionAnswer />
+              <Box ml={1}>
+                <Typography variant="h6">{process.env.REACT_APP_SCHOOL}万能墙</Typography>
+              </Box>
+            </Toolbar>
+          </AppBar>
+        </header>
+        <main>
+          <PostButton />
+        </main>
+      </SnackbarProvider>
     </ThemeProvider>
   );
 }

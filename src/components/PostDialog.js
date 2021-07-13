@@ -18,16 +18,25 @@ const Transition = forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const content = [
-  { type: 'love', title: '表白', component: <Love /> },
-  { type: 'complaint', title: '吐槽', component: '' },
-  { type: 'help', title: '求助', component: '' },
-  { type: 'notice', title: '通知', component: '' },
-  { type: 'expand', title: '扩列', component: '' },
-];
-
 export default function PostDialog(props) {
   const classes = useStyles();
+  const content = [
+    {
+      type: 'love',
+      title: '表白',
+      component: (
+        <Love
+          onClose={() => {
+            props.onClose();
+          }}
+        />
+      ),
+    },
+    { type: 'complaint', title: '吐槽', component: '' },
+    { type: 'help', title: '求助', component: '' },
+    { type: 'notice', title: '通知', component: '' },
+    { type: 'expand', title: '扩列', component: '' },
+  ];
   return (
     <div>
       <Dialog

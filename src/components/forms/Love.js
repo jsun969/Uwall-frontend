@@ -1,5 +1,6 @@
-import { sendLove } from '../../api';
 import { useState } from 'react';
+import { sendLove } from '../../api';
+import { useSnackbar } from 'notistack';
 import {
   TextField,
   Box,
@@ -15,13 +16,39 @@ import {
   Collapse,
 } from '@material-ui/core';
 
-export default function Love() {
+export default function Love(props) {
   const [fromSex, setFromSex] = useState(0);
   const [toSex, setToSex] = useState(0);
   const [fromName, setFromName] = useState('');
   const [toName, setToName] = useState('');
   const [message, setMessage] = useState('');
   const [anonymous, setAnonymous] = useState(false);
+
+  const { enqueueSnackbar } = useSnackbar();
+  const handleSubmit = async () => {
+    try {
+      const { status } = await sendLove({
+        from: {
+          name: anonymous ? '' : fromName,
+          sex: anonymous ? 0 : fromSex,
+        },
+        to: {
+          name: toName,
+          sex: toSex,
+        },
+        message,
+        anonymous,
+      });
+      if (status === 201) {
+        enqueueSnackbar('发送成功', { variant: 'success' });
+        props.onClose();
+      }
+    } catch (error) {
+      enqueueSnackbar(`发送失败 ${error}`, { variant: 'error' });
+      props.onClose();
+    }
+  };
+
   return (
     <Container>
       <Box mt={2}>
@@ -118,20 +145,7 @@ export default function Love() {
               variant="contained"
               color="primary"
               disabled={!((anonymous || !!fromName) && !!toName && !!message)}
-              onClick={async () => {
-                const { status } = await sendLove({
-                  from: {
-                    name: anonymous ? '' : fromName,
-                    sex: anonymous ? 0 : fromSex,
-                  },
-                  to: {
-                    name: toName,
-                    sex: toSex,
-                  },
-                  message,
-                  anonymous,
-                });
-              }}
+              onClick={handleSubmit}
             >
               发送
             </Button>
