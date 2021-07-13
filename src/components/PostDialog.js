@@ -19,11 +19,11 @@ const Transition = forwardRef(function Transition(props, ref) {
 });
 
 const content = [
-  { type: 'love', title: '表白', data: <Love /> },
-  { type: 'complaint', title: '吐槽', data: '' },
-  { type: 'help', title: '求助', data: '' },
-  { type: 'notice', title: '通知', data: '' },
-  { type: 'expand', title: '扩列', data: '' },
+  { type: 'love', title: '表白', component: <Love /> },
+  { type: 'complaint', title: '吐槽', component: '' },
+  { type: 'help', title: '求助', component: '' },
+  { type: 'notice', title: '通知', component: '' },
+  { type: 'expand', title: '扩列', component: '' },
 ];
 
 export default function PostDialog(props) {
@@ -55,7 +55,7 @@ export default function PostDialog(props) {
             </Typography>
           </Toolbar>
         </AppBar>
-        <Typography variant="h6">{content.find(({ type }) => type === props.type).data}</Typography>
+        <Typography variant="h6">{content.find(({ type }) => type === props.type).component}</Typography>
       </Dialog>
     </div>
   );
