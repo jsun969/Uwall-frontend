@@ -40,7 +40,7 @@ export default function Love(props) {
         anonymous,
       });
       if (status === 201) {
-        enqueueSnackbar('发送成功', { variant: 'success' });
+        enqueueSnackbar('发送成功 , 请等待审核通过', { variant: 'success' });
         props.onClose();
       }
     } catch (error) {
