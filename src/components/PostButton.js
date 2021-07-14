@@ -6,7 +6,7 @@ import PostDialog from './PostDialog';
 
 const useStyles = makeStyles((theme) => ({
   speedDial: {
-    position: 'absolute',
+    position: 'fixed',
     bottom: theme.spacing(2),
     right: theme.spacing(2),
   },
