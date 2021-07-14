@@ -5,6 +5,7 @@ import { QuestionAnswer } from '@material-ui/icons';
 import { ThemeProvider, createTheme } from '@material-ui/core/styles';
 import { pink, purple } from '@material-ui/core/colors';
 import PostButton from './components/PostButton';
+import AllMessages from './components/pages/AllMessages';
 import { SnackbarProvider } from 'notistack';
 
 const theme = createTheme({
@@ -44,7 +45,9 @@ function App() {
             </TabList>
           </AppBar>
           <Box pt={12}>
-            <TabPanel value="all">all</TabPanel>
+            <TabPanel value="all">
+              <AllMessages />
+            </TabPanel>
             <TabPanel value="love">love</TabPanel>
             <TabPanel value="complaint">complaint</TabPanel>
             <TabPanel value="help">help</TabPanel>
