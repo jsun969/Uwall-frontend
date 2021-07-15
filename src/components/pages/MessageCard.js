@@ -13,10 +13,21 @@ import {
   Grid,
   Collapse,
 } from '@material-ui/core';
-import { Favorite, RecordVoiceOver, Help, Notifications, People, Forward, ThumbUp, Chat } from '@material-ui/icons';
+import {
+  Favorite,
+  RecordVoiceOver,
+  Help,
+  Notifications,
+  People,
+  Forward,
+  ThumbUp,
+  Comment,
+  AddComment,
+} from '@material-ui/icons';
 import dayjs from 'dayjs';
+import CommentDialog from './CommentDialog';
 
-function Comment(props) {
+function CommentText(props) {
   const { time, name, comment } = props;
   return (
     <Box>
@@ -37,8 +48,9 @@ function Comment(props) {
 }
 
 export default function MessageCard(props) {
-  const { time, type, fromName, fromSex, toName, toSex, message, anonymous, likes, imageUrl, comments, showType } = props;
+  const { key, time, type, fromName, fromSex, toName, toSex, message, anonymous, likes, imageUrl, comments, showType } = props;
   const [showComments, setShowComments] = useState(false);
+  const [showCommentDialog, setShowCommentDialog] = useState(false);
 
   const types = {
     love: <Chip label="表白" icon={<Favorite />} />,
@@ -72,29 +84,53 @@ export default function MessageCard(props) {
       </CardContent>
       {imageUrl && <CardMedia image={imageUrl} style={{ height: 0, paddingTop: '56.25%' }} />}
       <CardActions>
-        <IconButton>
-          <Badge badgeContent={likes} color="secondary">
-            <ThumbUp />
-          </Badge>
-        </IconButton>
-        <IconButton
-          color={showComments ? 'primary' : 'default'}
-          onClick={() => {
-            setShowComments(!showComments);
-          }}
-        >
-          <Badge badgeContent={comments.length} color="secondary">
-            <Chat />
-          </Badge>
-        </IconButton>
+        <Grid container justifyContent="space-between">
+          <Grid item>
+            <IconButton>
+              <Badge badgeContent={likes} color="secondary">
+                <ThumbUp />
+              </Badge>
+            </IconButton>
+            <IconButton
+              color={showComments ? 'primary' : 'default'}
+              onClick={() => {
+                if (comments.length !== 0) setShowComments(!showComments);
+                else setShowCommentDialog(true);
+              }}
+            >
+              <Badge badgeContent={comments.length} color="secondary">
+                {comments.length !== 0 ? <Comment /> : <AddComment />}
+              </Badge>
+            </IconButton>
+          </Grid>
+          {comments.length !== 0 && (
+            <Grid item>
+              <IconButton
+                onClick={() => {
+                  setShowCommentDialog(true);
+                }}
+              >
+                <AddComment />
+              </IconButton>
+            </Grid>
+          )}
+        </Grid>
       </CardActions>
       <Collapse in={showComments}>
         <CardContent>
           {comments.map((comment) => (
-            <Comment time={comment.time} name={comment.name} comment={comment.comment} key={comment.id} />
+            <CommentText time={comment.time} name={comment.name} comment={comment.comment} key={comment.id} />
           ))}
         </CardContent>
       </Collapse>
+      <CommentDialog
+        from={fromName}
+        open={showCommentDialog}
+        id={key}
+        onClose={() => {
+          setShowCommentDialog(false);
+        }}
+      />
     </Card>
   );
 }
