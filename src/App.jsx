@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { AppBar, Toolbar, Typography, Box, Tab } from '@material-ui/core';
 import { TabPanel, TabContext, TabList } from '@material-ui/lab';
 import { QuestionAnswer } from '@material-ui/icons';
@@ -7,6 +7,7 @@ import { pink, purple } from '@material-ui/core/colors';
 import PostButton from './components/PostButton';
 import AllMessages from './pages/AllMessages';
 import { SnackbarProvider } from 'notistack';
+import storage from './storage';
 
 const theme = createTheme({
   palette: {
@@ -17,7 +18,9 @@ const theme = createTheme({
 
 function App() {
   const [tabIndex, setTabIndex] = useState('all');
-
+  useEffect(() => {
+    storage.initialize();
+  }, []);
   return (
     <ThemeProvider theme={theme}>
       <SnackbarProvider>
