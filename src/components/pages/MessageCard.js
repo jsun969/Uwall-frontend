@@ -71,13 +71,17 @@ export default function MessageCard(props) {
   return (
     <Card>
       <CardContent>
-        <Grid container justifyContent="space-between">
-          <Grid item>{showType && types[type]}</Grid>
-          <Grid item>
-            <Typography color="textSecondary">{dayjs(time).format('YYYY年M月D号 HH:mm')}</Typography>
+        {showType ? (
+          <Grid container justifyContent="space-between">
+            <Grid item>{types[type]}</Grid>
+            <Grid item>
+              <Typography color="textSecondary">{dayjs(time).format('YYYY年M月D号 HH:mm')}</Typography>
+            </Grid>
           </Grid>
-        </Grid>
-        <Box my={2.5}>
+        ) : (
+          <Typography color="textSecondary">{dayjs(time).format('YYYY年M月D号 HH:mm')}</Typography>
+        )}
+        <Box mb={2.5} mt={showType && 2.5}>
           <Typography variant="h5">{type === 'love' ? loveTitle : from}</Typography>
         </Box>
         <Typography>{message}</Typography>
