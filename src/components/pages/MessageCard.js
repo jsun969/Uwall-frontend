@@ -1,8 +1,44 @@
-import { Card, Chip, CardContent, Typography, CardActions, IconButton, Box, Badge, CardMedia } from '@material-ui/core';
-import { Favorite, RecordVoiceOver, Help, Notifications, People, Forward, ThumbUp, Comment } from '@material-ui/icons';
+import { useState } from 'react';
+import {
+  Card,
+  Chip,
+  CardContent,
+  Typography,
+  CardActions,
+  IconButton,
+  Box,
+  Badge,
+  CardMedia,
+  Divider,
+  Grid,
+  Collapse,
+} from '@material-ui/core';
+import { Favorite, RecordVoiceOver, Help, Notifications, People, Forward, ThumbUp, Chat } from '@material-ui/icons';
+import dayjs from 'dayjs';
+
+function Comment(props) {
+  const { time, name, comment } = props;
+  return (
+    <Box>
+      <Box mb={2} mt={1}>
+        <Divider />
+      </Box>
+      <Grid container justifyContent="space-between">
+        <Typography display="inline" align="left">
+          {name}
+        </Typography>
+        <Typography variant="caption" color="textSecondary" display="inline" align="right">
+          {dayjs(time).format('YYYY年M月D号 HH:mm')}
+        </Typography>
+      </Grid>
+      <Typography variant="body2">{comment}</Typography>
+    </Box>
+  );
+}
 
 export default function MessageCard(props) {
   const { time, type, fromName, fromSex, toName, toSex, message, anonymous, likes, imageUrl, comments, showType } = props;
+  const [showComments, setShowComments] = useState(false);
 
   const types = {
     love: <Chip label="表白" icon={<Favorite />} />,
@@ -11,28 +47,26 @@ export default function MessageCard(props) {
     notice: <Chip label="求助" icon={<Notifications />} />,
     expand: <Chip label="扩列" icon={<People />} />,
   };
-  const from = <span style={{ color: ['#000000', '#0069c0', '#b0003a'][fromSex] }}>{fromName} </span>;
+  const from = !anonymous && <span style={{ color: ['#000000', '#0069c0', '#b0003a'][fromSex] }}>{fromName} </span>;
   const to = <span style={{ color: ['#000000', '#0069c0', '#b0003a'][toSex] }}> {toName}</span>;
-
+  const loveTitle = (
+    <span>
+      {from}
+      <Forward style={{ color: '#f06292', marginBottom: '-5px' }} />
+      {to}
+    </span>
+  );
   return (
     <Card>
       <CardContent>
-        {showType && types[type]}
-        <Box mb={2.5}>
-          <Typography variant="h5">
-            {type === 'love' ? (
-              <span>
-                {anonymous || from}
-                <Forward style={{ color: '#f06292', marginBottom: '-5px' }} />
-                {to}
-              </span>
-            ) : (
-              anonymous || from
-            )}
-          </Typography>
-          <Box mt={anonymous && type !== 'love' && 2.5}>
-            <Typography color="textSecondary">{time}</Typography>
-          </Box>
+        <Grid container justifyContent="space-between">
+          <Grid item>{showType && types[type]}</Grid>
+          <Grid item>
+            <Typography color="textSecondary">{dayjs(time).format('YYYY年M月D号 HH:mm')}</Typography>
+          </Grid>
+        </Grid>
+        <Box my={2.5}>
+          <Typography variant="h5">{type === 'love' ? loveTitle : from}</Typography>
         </Box>
         <Typography>{message}</Typography>
       </CardContent>
@@ -43,12 +77,24 @@ export default function MessageCard(props) {
             <ThumbUp />
           </Badge>
         </IconButton>
-        <IconButton>
+        <IconButton
+          color={showComments ? 'primary' : 'default'}
+          onClick={() => {
+            setShowComments(!showComments);
+          }}
+        >
           <Badge badgeContent={comments.length} color="secondary">
-            <Comment />
+            <Chat />
           </Badge>
         </IconButton>
       </CardActions>
+      <Collapse in={showComments}>
+        <CardContent>
+          {comments.map((comment) => (
+            <Comment time={comment.time} name={comment.name} comment={comment.comment} key={comment.id} />
+          ))}
+        </CardContent>
+      </Collapse>
     </Card>
   );
 }
