@@ -24,8 +24,10 @@ import {
   Comment,
   AddComment,
 } from '@material-ui/icons';
+import { sendLike } from '../apis';
 import dayjs from 'dayjs';
-import CommentDialog from '../components/CommentDialog';
+import CommentDialog from './CommentDialog';
+import storage from '../storage';
 
 function CommentText(props) {
   const { time, name, comment } = props;
@@ -48,9 +50,11 @@ function CommentText(props) {
 }
 
 export default function MessageCard(props) {
-  const { key, time, type, fromName, fromSex, toName, toSex, message, anonymous, likes, imageUrl, comments, showType } = props;
+  const { id, time, type, fromName, fromSex, toName, toSex, message, anonymous, imageUrl, comments, showType } = props;
   const [showComments, setShowComments] = useState(false);
   const [showCommentDialog, setShowCommentDialog] = useState(false);
+  const [isLike, setIsLike] = useState(props.isLike);
+  const [likes, setLikes] = useState(props.likes);
 
   const types = {
     love: <Chip label="表白" icon={<Favorite />} />,
@@ -90,7 +94,17 @@ export default function MessageCard(props) {
       <CardActions>
         <Grid container justifyContent="space-between">
           <Grid item>
-            <IconButton>
+            <IconButton
+              onClick={() => {
+                if (!isLike) {
+                  setIsLike(true);
+                  storage.addLike(id);
+                  sendLike(id);
+                  setLikes(likes + 1);
+                }
+              }}
+              color={isLike ? 'primary' : 'default'}
+            >
               <Badge badgeContent={likes} color="secondary">
                 <ThumbUp />
               </Badge>
@@ -130,7 +144,7 @@ export default function MessageCard(props) {
       <CommentDialog
         from={fromName}
         open={showCommentDialog}
-        id={key}
+        id={id}
         onClose={() => {
           setShowCommentDialog(false);
         }}

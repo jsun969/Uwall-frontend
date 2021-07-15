@@ -2,6 +2,7 @@ import { getAllMessages } from '../apis';
 import { useEffect, useState } from 'react';
 import MessageCard from '../components/MessageCard';
 import { Grid } from '@material-ui/core';
+import storage from '../storage';
 
 export default function AllMessages() {
   const [messages, setMessages] = useState([]);
@@ -12,13 +13,14 @@ export default function AllMessages() {
     }
     fetchMsg();
   }, []);
+
   return (
     <Grid container spacing={2}>
       {messages.map((message) => (
-        <Grid item xs={12}>
+        <Grid item xs={12} key={message.id}>
           <MessageCard
             showType
-            key={message.id}
+            id={message.id}
             type={message.type}
             fromName={message.fromName}
             fromSex={message.fromSex}
@@ -30,6 +32,7 @@ export default function AllMessages() {
             likes={message.likes}
             imageUrl={message.imageUrl}
             comments={message.comments}
+            isLike={storage.getLikes().includes(message.id)}
           />
         </Grid>
       ))}
