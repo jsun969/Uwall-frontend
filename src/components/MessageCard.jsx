@@ -28,6 +28,7 @@ import { sendLike } from '../apis';
 import dayjs from 'dayjs';
 import CommentDialog from './CommentDialog';
 import storage from '../storage';
+import { useSnackbar } from 'notistack';
 
 function CommentText(props) {
   const { time, name, comment } = props;
@@ -50,7 +51,10 @@ function CommentText(props) {
 }
 
 export default function MessageCard(props) {
+  const { enqueueSnackbar } = useSnackbar();
+
   const { id, time, type, fromName, fromSex, toName, toSex, message, anonymous, imageUrl, comments, showType } = props;
+
   const [showComments, setShowComments] = useState(false);
   const [showCommentDialog, setShowCommentDialog] = useState(false);
   const [isLike, setIsLike] = useState(props.isLike);
@@ -95,12 +99,19 @@ export default function MessageCard(props) {
         <Grid container justifyContent="space-between">
           <Grid item>
             <IconButton
-              onClick={() => {
+              onClick={async () => {
+                setIsLike(true);
                 if (!isLike) {
-                  setIsLike(true);
                   storage.addLike(id);
-                  sendLike(id);
-                  setLikes(likes + 1);
+                  try {
+                    const { status } = await sendLike(id);
+                    if (status === 200) {
+                      enqueueSnackbar(`为 ${fromName} 点赞成功`, { variant: 'success' });
+                      setLikes(likes + 1);
+                    }
+                  } catch (error) {
+                    enqueueSnackbar(`点赞失败 ${error}`, { variant: 'error' });
+                  }
                 }
               }}
               color={isLike ? 'primary' : 'default'}
