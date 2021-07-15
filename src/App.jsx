@@ -23,7 +23,7 @@ function App() {
   }, []);
   return (
     <ThemeProvider theme={theme}>
-      <SnackbarProvider>
+      <SnackbarProvider maxSnack={1}>
         <TabContext value={tabIndex}>
           <AppBar>
             <Toolbar>
