@@ -5,3 +5,5 @@ const service = axios.create({
 });
 
 export const sendLove = (data) => service.post('/love', data);
+
+export const getAllMessages = () => service.get('/messages');
