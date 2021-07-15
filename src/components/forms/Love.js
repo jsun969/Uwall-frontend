@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { sendLove } from '../../api';
+import { sendLove } from '../../apis';
 import { useSnackbar } from 'notistack';
 import {
   TextField,

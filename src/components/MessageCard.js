@@ -25,7 +25,7 @@ import {
   AddComment,
 } from '@material-ui/icons';
 import dayjs from 'dayjs';
-import CommentDialog from './CommentDialog';
+import CommentDialog from '../components/CommentDialog';
 
 function CommentText(props) {
   const { time, name, comment } = props;

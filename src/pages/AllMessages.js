@@ -1,6 +1,6 @@
-import { getAllMessages } from '../../api';
+import { getAllMessages } from '../apis';
 import { useEffect, useState } from 'react';
-import MessageCard from './MessageCard';
+import MessageCard from '../components/MessageCard';
 import { Grid } from '@material-ui/core';
 
 export default function AllMessages() {

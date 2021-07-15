@@ -5,7 +5,7 @@ import { QuestionAnswer } from '@material-ui/icons';
 import { ThemeProvider, createTheme } from '@material-ui/core/styles';
 import { pink, purple } from '@material-ui/core/colors';
 import PostButton from './components/PostButton';
-import AllMessages from './components/pages/AllMessages';
+import AllMessages from './pages/AllMessages';
 import { SnackbarProvider } from 'notistack';
 
 const theme = createTheme({
