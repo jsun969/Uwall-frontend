@@ -25,9 +25,12 @@ export default function Love(props) {
   const [message, setMessage] = useState('');
   const [anonymous, setAnonymous] = useState(false);
 
+  const [disableSubmit, setDisableSubmit] = useState(false);
+
   const { enqueueSnackbar } = useSnackbar();
   const handleSubmit = async () => {
     try {
+      setDisableSubmit(true);
       storage.setName(fromName);
       const { status } = await sendLove({
         from: {
@@ -44,10 +47,12 @@ export default function Love(props) {
       if (status === 201) {
         enqueueSnackbar('发送成功 , 请等待审核通过', { variant: 'success' });
         props.onClose();
+        setDisableSubmit(false);
       }
     } catch (error) {
       enqueueSnackbar(`发送失败 ${error}`, { variant: 'error' });
       props.onClose();
+      setDisableSubmit(false);
     }
   };
 
@@ -146,7 +151,7 @@ export default function Love(props) {
             <Button
               variant="contained"
               color="primary"
-              disabled={!((anonymous || !!fromName) && !!toName && !!message)}
+              disabled={!((anonymous || !!fromName) && !!toName && !!message) || disableSubmit}
               onClick={handleSubmit}
             >
               发送

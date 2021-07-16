@@ -11,9 +11,12 @@ export default function BaseForm(props) {
   const [message, setMessage] = useState('');
   const [anonymous, setAnonymous] = useState(false);
 
+  const [disableSubmit, setDisableSubmit] = useState(false);
+
   const { enqueueSnackbar } = useSnackbar();
   const handleSubmit = async () => {
     try {
+      setDisableSubmit(true);
       storage.setName(name);
       const { status } = await sendForm(type, {
         name: anonymous ? '' : name,
@@ -23,10 +26,12 @@ export default function BaseForm(props) {
       if (status === 201) {
         enqueueSnackbar('发送成功 , 请等待审核通过', { variant: 'success' });
         props.onClose();
+        setDisableSubmit(false);
       }
     } catch (error) {
       enqueueSnackbar(`发送失败 ${error}`, { variant: 'error' });
       props.onClose();
+      setDisableSubmit(false);
     }
   };
 
@@ -85,7 +90,7 @@ export default function BaseForm(props) {
               <Button
                 variant="contained"
                 color="primary"
-                disabled={!((anonymous || !!name) && !!message)}
+                disabled={!((anonymous || !!name) && !!message) || disableSubmit}
                 onClick={handleSubmit}
               >
                 发送

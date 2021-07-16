@@ -8,10 +8,13 @@ export default function CommentDialog(props) {
   const [name, setName] = useState(storage.getName());
   const [comment, setComment] = useState('');
 
+  const [disableSubmit, setDisableSubmit] = useState(false);
+
   const { enqueueSnackbar } = useSnackbar();
 
   const handleSubmit = async () => {
     try {
+      setDisableSubmit(true);
       storage.setName(name);
       const { status } = await sendComment({
         id: props.id,
@@ -21,10 +24,12 @@ export default function CommentDialog(props) {
       if (status === 201) {
         enqueueSnackbar('评论成功 , 请等待审核通过', { variant: 'success' });
         props.onClose();
+        setDisableSubmit(true);
       }
     } catch (error) {
       enqueueSnackbar(`评论失败 ${error}`, { variant: 'error' });
       props.onClose();
+      setDisableSubmit(false);
     }
   };
 
@@ -69,7 +74,7 @@ export default function CommentDialog(props) {
           >
             取消
           </Button>
-          <Button onClick={handleSubmit} color="primary" disabled={!(name && comment)}>
+          <Button onClick={handleSubmit} color="primary" disabled={!(name && comment) || disableSubmit}>
             发送
           </Button>
         </DialogActions>
