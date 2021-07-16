@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Dialog, AppBar, Toolbar, IconButton, Typography, Slide } from '@material-ui/core';
 import { Close } from '@material-ui/icons';
 import Love from './forms/Love';
+import BaseForm from './forms/Base';
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -32,10 +33,56 @@ export default function PostDialog(props) {
         />
       ),
     },
-    { type: 'complaint', title: '吐槽', component: '' },
-    { type: 'help', title: '求助', component: '' },
-    { type: 'notice', title: '通知', component: '' },
-    { type: 'expand', title: '扩列', component: '' },
+    {
+      type: 'complaint',
+      title: '吐槽',
+      component: (
+        <BaseForm
+          haveAnonymous
+          type="complaint"
+          onClose={() => {
+            props.onClose();
+          }}
+        />
+      ),
+    },
+    {
+      type: 'help',
+      title: '求助',
+      component: (
+        <BaseForm
+          haveAnonymous
+          type="help"
+          onClose={() => {
+            props.onClose();
+          }}
+        />
+      ),
+    },
+    {
+      type: 'notice',
+      title: '通知',
+      component: (
+        <BaseForm
+          type="notice"
+          onClose={() => {
+            props.onClose();
+          }}
+        />
+      ),
+    },
+    {
+      type: 'expand',
+      title: '扩列',
+      component: (
+        <BaseForm
+          type="expand"
+          onClose={() => {
+            props.onClose();
+          }}
+        />
+      ),
+    },
   ];
   return (
     <div>
