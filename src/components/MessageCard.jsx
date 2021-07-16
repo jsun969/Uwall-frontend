@@ -106,7 +106,7 @@ export default function MessageCard(props) {
                   try {
                     const { status } = await sendLike(id);
                     if (status === 200) {
-                      enqueueSnackbar(`为 ${fromName} 点赞成功`, { variant: 'success' });
+                      enqueueSnackbar(`为 ${fromName ? fromName : '匿名'} 点赞成功`, { variant: 'success' });
                       setLikes(likes + 1);
                     }
                   } catch (error) {

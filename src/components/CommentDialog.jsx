@@ -36,7 +36,7 @@ export default function CommentDialog(props) {
       >
         <DialogTitle>添加评论</DialogTitle>
         <DialogContent>
-          <DialogContentText>给 {props.from} 评论</DialogContentText>
+          <DialogContentText>给 {props.from ? props.from : '匿名'} 评论</DialogContentText>
           <TextField
             margin="dense"
             label="你的名字"
