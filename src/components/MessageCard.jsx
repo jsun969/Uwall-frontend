@@ -92,7 +92,9 @@ export default function MessageCard(props) {
         <Box mb={2.5} mt={showType ? 2.5 : 0}>
           <Typography variant="h5">{type === 'love' ? loveTitle : from}</Typography>
         </Box>
-        <Typography>{message}</Typography>
+        <Typography component="pre">
+          {message}
+        </Typography>
       </CardContent>
       {imageUrl && <CardMedia image={imageUrl} style={{ height: 0, paddingTop: '56.25%' }} />}
       <CardActions>
