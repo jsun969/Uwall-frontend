@@ -1,18 +1,29 @@
-import { getAllMessages } from '../apis';
+import { getMessages } from '../apis';
 import { useEffect, useState } from 'react';
 import MessageCard from '../components/MessageCard';
-import { Grid } from '@material-ui/core';
+import { Grid, Button } from '@material-ui/core';
 import storage from '../storage';
 
 export default function AllMessages() {
   const [messages, setMessages] = useState([]);
+  const [page, setPage] = useState(1);
+  const [showLoad, setShowLoad] = useState(true);
+
   useEffect(() => {
-    async function fetchMsg() {
-      const { data } = await getAllMessages();
+    (async () => {
+      const { data } = await getMessages(0);
       setMessages(data);
-    }
-    fetchMsg();
+    })();
   }, []);
+
+  const handleLoad = () => {
+    (async () => {
+      const { data } = await getMessages(page);
+      if (data.length === 0) setShowLoad(false);
+      setMessages([...messages, ...data]);
+      setPage(page + 1);
+    })();
+  };
 
   return (
     <Grid container spacing={2}>
@@ -36,6 +47,13 @@ export default function AllMessages() {
           />
         </Grid>
       ))}
+      <Grid item container justifyContent="center">
+        <Grid item>
+          <Button onClick={handleLoad} color="secondary" variant="contained" disabled={!showLoad}>
+            {showLoad ? '加载更多' : '没了'}
+          </Button>
+        </Grid>
+      </Grid>
     </Grid>
   );
 }
