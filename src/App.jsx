@@ -5,7 +5,7 @@ import { QuestionAnswer } from '@material-ui/icons';
 import { ThemeProvider, createTheme } from '@material-ui/core/styles';
 import { pink, purple } from '@material-ui/core/colors';
 import PostButton from './components/PostButton';
-import AllMessages from './pages/AllMessages';
+import Messages from './components/Messages';
 import { SnackbarProvider } from 'notistack';
 import storage from './storage';
 
@@ -49,13 +49,23 @@ function App() {
           </AppBar>
           <Box pt={12}>
             <TabPanel value="all">
-              <AllMessages />
+              <Messages />
             </TabPanel>
-            <TabPanel value="love">love</TabPanel>
-            <TabPanel value="complaint">complaint</TabPanel>
-            <TabPanel value="help">help</TabPanel>
-            <TabPanel value="notice">notice</TabPanel>
-            <TabPanel value="expand">expand</TabPanel>
+            <TabPanel value="love">
+              <Messages type="love" />
+            </TabPanel>
+            <TabPanel value="complaint">
+              <Messages type="complaint" />
+            </TabPanel>
+            <TabPanel value="help">
+              <Messages type="help" />
+            </TabPanel>
+            <TabPanel value="notice">
+              <Messages type="notice" />
+            </TabPanel>
+            <TabPanel value="expand">
+              <Messages type="expand" />
+            </TabPanel>
           </Box>
         </TabContext>
         <PostButton />

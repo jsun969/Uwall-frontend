@@ -89,7 +89,7 @@ export default function MessageCard(props) {
         ) : (
           <Typography color="textSecondary">{dayjs(time).format('YYYY年M月D号 HH:mm')}</Typography>
         )}
-        <Box mb={2.5} mt={showType && 2.5}>
+        <Box mb={2.5} mt={showType ? 2.5 : 0}>
           <Typography variant="h5">{type === 'love' ? loveTitle : from}</Typography>
         </Box>
         <Typography>{message}</Typography>

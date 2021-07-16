@@ -1,25 +1,27 @@
 import { getMessages } from '../apis';
 import { useEffect, useState } from 'react';
-import MessageCard from '../components/MessageCard';
+import MessageCard from './MessageCard';
 import { Grid, Button } from '@material-ui/core';
 import storage from '../storage';
 
-export default function AllMessages() {
+export default function Messages(props) {
+  const { type } = props;
   const [messages, setMessages] = useState([]);
   const [page, setPage] = useState(1);
   const [showLoad, setShowLoad] = useState(true);
 
   useEffect(() => {
     (async () => {
-      const { data } = await getMessages(0);
+      const { data } = await getMessages(type, 0);
+      if (data.length < 10) setShowLoad(false);
       setMessages(data);
     })();
-  }, []);
+  }, [type]);
 
   const handleLoad = () => {
     (async () => {
-      const { data } = await getMessages(page);
-      if (data.length === 0) setShowLoad(false);
+      const { data } = await getMessages(type, page);
+      if (data.length < 10) setShowLoad(false);
       setMessages([...messages, ...data]);
       setPage(page + 1);
     })();
@@ -30,7 +32,7 @@ export default function AllMessages() {
       {messages.map((message) => (
         <Grid item xs={12} key={message.id}>
           <MessageCard
-            showType
+            showType={!type}
             id={message.id}
             type={message.type}
             fromName={message.fromName}
