@@ -15,11 +15,12 @@ import {
   Button,
   Collapse,
 } from '@material-ui/core';
+import storage from '../../storage';
 
 export default function Love(props) {
   const [fromSex, setFromSex] = useState(0);
   const [toSex, setToSex] = useState(0);
-  const [fromName, setFromName] = useState('');
+  const [fromName, setFromName] = useState(storage.getName());
   const [toName, setToName] = useState('');
   const [message, setMessage] = useState('');
   const [anonymous, setAnonymous] = useState(false);
@@ -27,6 +28,7 @@ export default function Love(props) {
   const { enqueueSnackbar } = useSnackbar();
   const handleSubmit = async () => {
     try {
+      storage.setName(fromName);
       const { status } = await sendLove({
         from: {
           name: anonymous ? '' : fromName,

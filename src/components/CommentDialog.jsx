@@ -2,15 +2,17 @@ import { Button, TextField, Dialog, DialogActions, DialogContent, DialogContentT
 import { useState } from 'react';
 import { sendComment } from '../apis';
 import { useSnackbar } from 'notistack';
+import storage from '../storage';
 
 export default function CommentDialog(props) {
-  const [name, setName] = useState('');
+  const [name, setName] = useState(storage.getName());
   const [comment, setComment] = useState('');
 
   const { enqueueSnackbar } = useSnackbar();
 
   const handleSubmit = async () => {
     try {
+      storage.setName(name);
       const { status } = await sendComment({
         id: props.id,
         name,
@@ -67,7 +69,7 @@ export default function CommentDialog(props) {
           >
             取消
           </Button>
-          <Button onClick={handleSubmit} color="primary">
+          <Button onClick={handleSubmit} color="primary" disabled={!(name && comment)}>
             发送
           </Button>
         </DialogActions>

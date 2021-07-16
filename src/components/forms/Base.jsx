@@ -2,19 +2,21 @@ import { useState } from 'react';
 import { sendForm } from '../../apis';
 import { useSnackbar } from 'notistack';
 import { TextField, Box, Container, FormControlLabel, Grid, Switch, Button, Collapse } from '@material-ui/core';
+import storage from '../../storage';
 
 export default function BaseForm(props) {
   const { haveAnonymous, type } = props;
 
-  const [fromName, setFromName] = useState('');
+  const [name, setName] = useState(storage.getName());
   const [message, setMessage] = useState('');
   const [anonymous, setAnonymous] = useState(false);
 
   const { enqueueSnackbar } = useSnackbar();
   const handleSubmit = async () => {
     try {
+      storage.setName(name);
       const { status } = await sendForm(type, {
-        name: anonymous ? '' : fromName,
+        name: anonymous ? '' : name,
         message,
         anonymous,
       });
@@ -39,9 +41,9 @@ export default function BaseForm(props) {
                   <TextField
                     label="你的名字"
                     fullWidth
-                    value={fromName}
+                    value={name}
                     onChange={(event) => {
-                      setFromName(event.target.value);
+                      setName(event.target.value);
                     }}
                     inputProps={{ maxLength: 15 }}
                   />
@@ -83,7 +85,7 @@ export default function BaseForm(props) {
               <Button
                 variant="contained"
                 color="primary"
-                disabled={!((anonymous || !!fromName) && !!message)}
+                disabled={!((anonymous || !!name) && !!message)}
                 onClick={handleSubmit}
               >
                 发送
