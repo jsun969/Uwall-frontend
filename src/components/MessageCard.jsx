@@ -64,7 +64,7 @@ export default function MessageCard(props) {
     love: <Chip label="表白" icon={<Favorite />} />,
     complaint: <Chip label="吐槽" icon={<RecordVoiceOver />} />,
     help: <Chip label="求助" icon={<Help />} />,
-    notice: <Chip label="求助" icon={<Notifications />} />,
+    notice: <Chip label="通知" icon={<Notifications />} />,
     expand: <Chip label="扩列" icon={<People />} />,
   };
   const from = !anonymous && <span style={{ color: ['#000000', '#0069c0', '#b0003a'][fromSex] }}>{fromName} </span>;
