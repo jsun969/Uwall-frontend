@@ -92,7 +92,7 @@ export default function MessageCard(props) {
         <Box mb={2.5} mt={showType ? 2.5 : 0}>
           <Typography variant="h5">{type === 'love' ? loveTitle : from}</Typography>
         </Box>
-        <Typography component="pre">
+        <Typography component="pre" style={{ wordWrap: 'break-word', whiteSpace: 'pre-wrap' }}>
           {message}
         </Typography>
       </CardContent>
