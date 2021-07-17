@@ -13,8 +13,8 @@
 3. 基本配置
    1. 创建 `.env.production.local` 文件
    2. 按照 `.env.development` 文件进行配置  
-      *推荐后端地址配置为* `REACT_APP_API='/api'`
-4. `yarn build` 构建
+      _推荐后端地址配置为_ `REACT_APP_API='/api'`
+4. `yarn build` / `npm build` 构建
 5. 将生成的 `build` 文件夹中的文件放入服务器
 
 ## Todo List
