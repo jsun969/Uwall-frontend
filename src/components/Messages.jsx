@@ -30,7 +30,9 @@ export default function Messages(props) {
     (async () => {
       setLoading(true);
       const { data } = await getMessages(type, 0);
-      if (data.length < 10) setShowLoad(false);
+      if (data.length < 10) {
+        setShowLoad(false);
+      }
       setMessages(data);
       setLoading(false);
     })();

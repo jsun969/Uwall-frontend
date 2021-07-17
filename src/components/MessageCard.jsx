@@ -125,8 +125,11 @@ export default function MessageCard(props) {
             <IconButton
               color={showComments ? 'primary' : 'default'}
               onClick={() => {
-                if (comments.length !== 0) setShowComments(!showComments);
-                else setShowCommentDialog(true);
+                if (comments.length !== 0) {
+                  setShowComments(!showComments);
+                } else {
+                  setShowCommentDialog(true);
+                }
               }}
             >
               <Badge badgeContent={comments.length} color="secondary">

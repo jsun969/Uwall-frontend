@@ -1,5 +1,7 @@
 const initialize = () => {
-  if (!localStorage.getItem('likes')) localStorage.setItem('likes', '[]');
+  if (!localStorage.getItem('likes')) {
+    localStorage.setItem('likes', '[]');
+  }
 };
 
 const addLike = (id) => {
