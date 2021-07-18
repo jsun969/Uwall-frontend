@@ -32,18 +32,19 @@ export default function Love(props) {
     try {
       setDisableSubmit(true);
       storage.setName(fromName);
-      const { status } = await sendLove({
-        from: {
-          name: anonymous ? '' : fromName,
-          sex: anonymous ? 0 : fromSex,
-        },
-        to: {
-          name: toName,
-          sex: toSex,
-        },
-        message,
-        anonymous,
-      });
+      const { status } =
+        (await sendLove({
+          from: {
+            name: anonymous ? '' : fromName,
+            sex: anonymous ? 0 : fromSex,
+          },
+          to: {
+            name: toName,
+            sex: toSex,
+          },
+          message,
+          anonymous,
+        })) || {};
       if (status === 201) {
         enqueueSnackbar('发送成功 , 请等待审核通过', { variant: 'success' });
         props.onClose();

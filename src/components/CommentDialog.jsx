@@ -16,11 +16,12 @@ export default function CommentDialog(props) {
     try {
       setDisableSubmit(true);
       storage.setName(name);
-      const { status } = await sendComment({
-        id: props.id,
-        name,
-        comment,
-      });
+      const { status } =
+        (await sendComment({
+          id: props.id,
+          name,
+          comment,
+        })) || {};
       if (status === 201) {
         enqueueSnackbar('评论成功 , 请等待审核通过', { variant: 'success' });
         props.onClose();

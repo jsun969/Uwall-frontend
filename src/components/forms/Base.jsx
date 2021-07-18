@@ -18,11 +18,12 @@ export default function BaseForm(props) {
     try {
       setDisableSubmit(true);
       storage.setName(name);
-      const { status } = await sendForm(type, {
-        name: anonymous ? '' : name,
-        message,
-        anonymous,
-      });
+      const { status } =
+        (await sendForm(type, {
+          name: anonymous ? '' : name,
+          message,
+          anonymous,
+        })) || {};
       if (status === 201) {
         enqueueSnackbar('发送成功 , 请等待审核通过', { variant: 'success' });
         props.onClose();

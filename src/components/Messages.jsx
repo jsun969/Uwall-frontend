@@ -29,7 +29,7 @@ export default function Messages(props) {
   useEffect(() => {
     (async () => {
       setLoading(true);
-      const { data } = await getMessages(type, 0);
+      const { data } = (await getMessages(type, 0)) || {};
       if (data.length < 10) {
         setShowLoad(false);
       }
@@ -41,7 +41,7 @@ export default function Messages(props) {
   const handleLoad = () => {
     (async () => {
       setLoading(true);
-      const { data } = await getMessages(type, page);
+      const { data } = (await getMessages(type, page)) || {};
       setMessages([...messages, ...data]);
       if (data.length < 10) {
         setLoading(false);

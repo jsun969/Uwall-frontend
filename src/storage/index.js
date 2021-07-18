@@ -10,7 +10,7 @@ const addLike = (id) => {
   localStorage.setItem('likes', JSON.stringify(likes));
 };
 
-const getLikes = () => JSON.parse(localStorage.getItem('likes'));
+const getLikes = () => JSON.parse(localStorage.getItem('likes') || '[]');
 
 const setName = (name) => localStorage.setItem('name', name);
 
