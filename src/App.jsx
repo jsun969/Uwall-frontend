@@ -7,7 +7,7 @@ import { pink, purple } from '@material-ui/core/colors';
 import PostButton from './components/PostButton';
 import Messages from './components/Messages';
 import { SnackbarProvider } from 'notistack';
-import storage from './storage';
+import storage from './utils/storage';
 
 const theme = createTheme({
   palette: {

@@ -15,7 +15,7 @@ import {
   Button,
   Collapse,
 } from '@material-ui/core';
-import storage from '../../storage';
+import storage from '../../utils/storage';
 
 export default function Love(props) {
   const [fromSex, setFromSex] = useState(0);

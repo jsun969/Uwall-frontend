@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { sendForm } from '../../apis';
 import { useSnackbar } from 'notistack';
 import { TextField, Box, Container, FormControlLabel, Grid, Switch, Button, Collapse } from '@material-ui/core';
-import storage from '../../storage';
+import storage from '../../utils/storage';
 
 export default function BaseForm(props) {
   const { haveAnonymous, type } = props;

@@ -27,7 +27,7 @@ import {
 import { sendLike } from '../apis';
 import dayjs from 'dayjs';
 import CommentDialog from './CommentDialog';
-import storage from '../storage';
+import storage from '../utils/storage';
 import { useSnackbar } from 'notistack';
 
 function CommentText(props) {

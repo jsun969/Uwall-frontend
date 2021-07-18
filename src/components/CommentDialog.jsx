@@ -2,7 +2,7 @@ import { Button, TextField, Dialog, DialogActions, DialogContent, DialogContentT
 import { useState } from 'react';
 import { sendComment } from '../apis';
 import { useSnackbar } from 'notistack';
-import storage from '../storage';
+import storage from '../utils/storage';
 
 export default function CommentDialog(props) {
   const [name, setName] = useState(storage.getName());
